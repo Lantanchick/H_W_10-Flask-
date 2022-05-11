@@ -11,21 +11,25 @@ app = Flask(__name__)
 def page_index():
     lt = ''
     for i in candidat_list:
-        lt += f"--({i['name']},{i['position']},{i['skills']})--"
+        lt += f"<br><b>Имя кандидата - {i['name']}</b></br><br>Позиция кандидата - {i['position']}</br><br>Навыки - {i['skills']}</br><br></br>"
     return lt
 
 
 @app.route("/candidates/<int:num_can>")
-def candidat_name(num_can):
-    return candidat_list[num_can - 1]["name"]
+def candidat(num_can):
+    lt = ''
+    for i in candidat_list:
+        if num_can == int(i['id']):
+            lt = f"<br><img src = {i['picture']}></br><br><b>Имя кандидата - {i['name']}</b></br><br>Позиция кандидата - {i['position']}</br><br>Навыки - {i['skills']}</br><br></br>"
+    return lt
 
 
 @app.route("/skills/<skill>")
 def page_skills(skill):
     lt = ''
     for i in candidat_list:
-        if skill in i["skills"]:
-            lt += f"--({i['name']},{i['position']},{i['skills']})--"
+        if skill in i['skills'].lower().split(', '):
+            lt += f"<br><b>Имя кандидата - {i['name']}</b></br><br>Позиция кандидата - {i['position']}</br><br>Навыки - {i['skills']}</br><br></br>"
     return lt
 
 
